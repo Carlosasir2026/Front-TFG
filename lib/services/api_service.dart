@@ -258,4 +258,44 @@ class ApiService {
       );
     }
   }
+  static Future<void> registrarEmpresa({
+    required String nombre,
+    required String cif,
+    String? direccion,
+    String? telefono,
+    String? email,
+  }) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/empresas'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: jsonEncode({
+        'nombre': nombre,
+        'cif': cif,
+        'direccion': direccion,
+        'telefono': telefono,
+        'email': email,
+      }),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode == 201) {
+      return;
+    }
+
+    if (response.statusCode == 422) {
+      final errors = data['errors'] as Map<String, dynamic>;
+
+      final message = errors.values
+          .map((errorList) => errorList[0])
+          .join('\n');
+
+      throw Exception(message);
+    }
+
+    throw Exception(data['message'] ?? 'Error al registrar la empresa');
+  }
 }
