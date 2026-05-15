@@ -58,12 +58,31 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: loading ? null : login,
                     child: Text(loading ? 'Entrando...' : 'Entrar'),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const RegisterScreen()));
-                    },
-                    child: const Text('Crear cuenta'),
-                  )
+                 const SizedBox(height: 10),
+
+Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    TextButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const RegisterScreen()),
+        );
+      },
+      child: const Text('Crear cuenta'),
+    ),
+    TextButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const EmpresaScreen()),
+        );
+      },
+      child: const Text('Registrar empresa'),
+    ),
+  ],
+),
                 ],
               ),
             ),
